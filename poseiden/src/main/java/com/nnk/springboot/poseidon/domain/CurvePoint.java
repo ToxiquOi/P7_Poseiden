@@ -18,7 +18,7 @@ public class CurvePoint {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id", nullable = false)
-    private Integer id;
+    private int id;
     private Integer curveId;
     private Timestamp asOfDate;
     private Double term;
