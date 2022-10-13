@@ -12,7 +12,6 @@ import java.sql.Timestamp;
 @Table(name = "bidlist")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class BidList {
 

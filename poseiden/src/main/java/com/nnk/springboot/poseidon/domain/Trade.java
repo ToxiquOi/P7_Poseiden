@@ -12,7 +12,6 @@ import javax.persistence.*;
 @Table(name = "trade")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class Trade {
 

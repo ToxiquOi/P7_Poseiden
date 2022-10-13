@@ -11,7 +11,6 @@ import javax.persistence.*;
 @Table(name = "rating")
 @Getter
 @Setter
-@AllArgsConstructor
 @NoArgsConstructor
 public class Rating {
 

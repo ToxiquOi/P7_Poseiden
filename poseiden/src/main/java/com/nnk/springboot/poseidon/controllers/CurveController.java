@@ -9,7 +9,6 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
-@RestController
 public class CurveController {
     // TODO: Inject Curve Point service
 
