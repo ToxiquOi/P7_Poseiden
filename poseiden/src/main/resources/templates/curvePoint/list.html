@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>Home</title>
-<link rel="stylesheet" href="../../static/css/bootstrap.min.css" >
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
 <div class="container">
@@ -37,7 +37,16 @@
 				</tr>
 			</thead>
 			<tbody>
-			<!-- TODO: Show all CurvePoint to the table, the action column will have Edit & Delete buttons -->
+				<tr th:each="curve: ${curves}">
+					<td th:text="${curve.id}" />
+					<td th:text="${curve.curveId}" />
+					<td th:text="${curve.term}" />
+					<td th:text="${curve.value}" />
+					<td>
+						<button type="button" class="btn btn-primary">Edit</button>
+						<button type="button" class="btn btn-danger" >Delete</button>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>

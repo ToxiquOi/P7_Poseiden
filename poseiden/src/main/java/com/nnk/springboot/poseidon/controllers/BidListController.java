@@ -11,6 +11,7 @@ import org.springframework.web.bind.annotation.*;
 import javax.validation.Valid;
 
 @Controller
+@CrossOrigin("*")
 public class BidListController {
 
     private final BidListService bidListService;
@@ -54,7 +55,8 @@ public class BidListController {
 
     @GetMapping("/bidList/delete/{id}")
     public String deleteBid(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find Bid by Id and delete the bid, return to Bid list
+        bidListService.deleteById(id);
+        model.addAttribute("bidlists", bidListService.reads());
         return "redirect:/bidList/list";
     }
 }

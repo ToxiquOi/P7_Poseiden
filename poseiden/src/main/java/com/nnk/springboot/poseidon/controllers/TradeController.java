@@ -1,6 +1,8 @@
 package com.nnk.springboot.poseidon.controllers;
 
 import com.nnk.springboot.poseidon.domain.Trade;
+import com.nnk.springboot.poseidon.services.TradeService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,12 +12,18 @@ import javax.validation.Valid;
 
 @Controller
 public class TradeController {
-    // TODO: Inject Trade service
+
+    private final TradeService tradeService;
+
+    @Autowired
+    public TradeController(TradeService tradeService) {
+        this.tradeService = tradeService;
+    }
 
     @RequestMapping("/trade/list")
     public String home(Model model)
     {
-        // TODO: find all Trade, add to model
+        model.addAttribute("trades", tradeService.reads());
         return "trade/list";
     }
 
@@ -45,7 +53,9 @@ public class TradeController {
 
     @GetMapping("/trade/delete/{id}")
     public String deleteTrade(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find Trade by Id and delete the Trade, return to Trade list
+
+        tradeService.deleteById(id);
+        model.addAttribute("trades", tradeService.reads());
         return "redirect:/trade/list";
     }
 }

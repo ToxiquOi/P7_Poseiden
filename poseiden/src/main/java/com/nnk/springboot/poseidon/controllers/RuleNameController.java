@@ -1,6 +1,8 @@
 package com.nnk.springboot.poseidon.controllers;
 
 import com.nnk.springboot.poseidon.domain.RuleName;
+import com.nnk.springboot.poseidon.services.RuleService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,12 +12,18 @@ import javax.validation.Valid;
 
 @Controller
 public class RuleNameController {
-    // TODO: Inject RuleName service
+
+    private final RuleService ruleService;
+
+    @Autowired
+    public RuleNameController(RuleService ruleService) {
+        this.ruleService = ruleService;
+    }
 
     @RequestMapping("/ruleName/list")
     public String home(Model model)
     {
-        // TODO: find all RuleName, add to model
+        model.addAttribute("rules", ruleService.reads());
         return "ruleName/list";
     }
 
@@ -45,7 +53,8 @@ public class RuleNameController {
 
     @GetMapping("/ruleName/delete/{id}")
     public String deleteRuleName(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find RuleName by Id and delete the RuleName, return to Rule list
+        ruleService.deleteById(id);
+        model.addAttribute("rules", ruleService.reads());
         return "redirect:/ruleName/list";
     }
 }

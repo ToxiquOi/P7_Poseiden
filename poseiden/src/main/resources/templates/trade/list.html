@@ -2,9 +2,9 @@
 <html xmlns="http://www.w3.org/1999/xhtml" 
 	  xmlns:th="http://www.thymeleaf.org">
 <head>
-<meta charset="utf-8"/>
-<title>Home</title>
-<link rel="stylesheet" href="../../static/css/bootstrap.min.css" >
+	<meta charset="utf-8"/>
+	<title>Home</title>
+	<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
 <div class="container">
@@ -37,7 +37,15 @@
 				</tr>
 			</thead>
 			<tbody>
-			<!-- TODO: Show all Trade to the table, the Action column will have Edit & Delete buttons -->
+			<tr th:each="trade: ${trades}">
+				<td th:text="${trade.tradeId}" />
+				<td th:text="${trade.account}" />
+				<td th:text="${trade.type}" />
+				<td>
+					<button type="button" class="btn btn-primary">Edit</button>
+					<button type="button" class="btn btn-danger" >Delete</button>
+				</td>
+			</tr>
 			</tbody>
 		</table>
 	</div>

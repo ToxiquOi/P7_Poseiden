@@ -4,7 +4,7 @@
 <head>
 <meta charset="utf-8"/>
 <title>Home</title>
-<link rel="stylesheet" href="../../static/css/bootstrap.min.css" >
+<link rel="stylesheet" type="text/css" th:href="@{/css/bootstrap.min.css}" />
 </head>
 <body>
 <div class="container">
@@ -38,7 +38,17 @@
 				</tr>
 			</thead>
 			<tbody>
-			<!-- TODO: Show all Rating to the table, the Action column will have Edit & Delete buttons -->
+				<tr th:each="rating: ${ratings}">
+					<td th:text="${rating.id}" />
+					<td th:text="${rating.moodysRating}" />
+					<td th:text="${rating.sandPRating}" />
+					<td th:text="${rating.fitchRating}" />
+					<td th:text="${rating.orderNumber}" />
+					<td>
+						<button type="button" class="btn btn-primary">Edit</button>
+						<button type="button" class="btn btn-danger" >Delete</button>
+					</td>
+				</tr>
 			</tbody>
 		</table>
 	</div>

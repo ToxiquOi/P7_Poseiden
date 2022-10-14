@@ -1,6 +1,8 @@
 package com.nnk.springboot.poseidon.controllers;
 
 import com.nnk.springboot.poseidon.domain.CurvePoint;
+import com.nnk.springboot.poseidon.services.CurvePointService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,12 +12,18 @@ import javax.validation.Valid;
 
 @Controller
 public class CurveController {
-    // TODO: Inject Curve Point service
+
+    private final CurvePointService curveService;
+
+    @Autowired
+    public CurveController(CurvePointService curveService) {
+        this.curveService = curveService;
+    }
 
     @RequestMapping("/curvePoint/list")
     public String home(Model model)
     {
-        // TODO: find all Curve Point, add to model
+        model.addAttribute("curves", curveService.reads());
         return "curvePoint/list";
     }
 
@@ -45,7 +53,8 @@ public class CurveController {
 
     @GetMapping("/curvePoint/delete/{id}")
     public String deleteBid(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find Curve by Id and delete the Curve, return to Curve list
+        curveService.deleteById(id);
+        model.addAttribute("curves", curveService.reads());
         return "redirect:/curvePoint/list";
     }
 }

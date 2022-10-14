@@ -1,6 +1,8 @@
 package com.nnk.springboot.poseidon.controllers;
 
 import com.nnk.springboot.poseidon.domain.Rating;
+import com.nnk.springboot.poseidon.services.RatingService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,12 +12,18 @@ import javax.validation.Valid;
 
 @Controller
 public class RatingController {
-    // TODO: Inject Rating service
+
+    private final RatingService ratingService;
+
+    @Autowired
+    public RatingController(RatingService ratingService) {
+        this.ratingService = ratingService;
+    }
 
     @RequestMapping("/rating/list")
     public String home(Model model)
     {
-        // TODO: find all Rating, add to model
+        model.addAttribute("ratings", ratingService.reads());
         return "rating/list";
     }
 
@@ -45,7 +53,8 @@ public class RatingController {
 
     @GetMapping("/rating/delete/{id}")
     public String deleteRating(@PathVariable("id") Integer id, Model model) {
-        // TODO: Find Rating by Id and delete the Rating, return to Rating list
+        ratingService.deleteById(id);
+        model.addAttribute("ratings", ratingService.reads());
         return "redirect:/rating/list";
     }
 }
