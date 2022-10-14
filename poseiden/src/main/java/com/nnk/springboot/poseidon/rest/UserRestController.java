@@ -1,13 +1,12 @@
 package com.nnk.springboot.poseidon.rest;
 
 import com.nnk.springboot.poseidon.domain.User;
-import com.nnk.springboot.poseidon.mapper.ReflectMapper;
 import com.nnk.springboot.poseidon.models.UserRegistrationModel;
 import com.nnk.springboot.poseidon.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
-import sun.reflect.generics.reflectiveObjects.NotImplementedException;
 
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
@@ -25,7 +24,7 @@ public class UserRestController extends ACrudCustomSaveRestController<UserServic
     @Override
     @Deprecated
     public ResponseEntity<Collection<User>> saveAll(Collection<UserRegistrationModel> models) {
-        throw new NotImplementedException();
+        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
     }
 
     @Override

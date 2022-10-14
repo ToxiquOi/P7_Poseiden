@@ -1,6 +1,8 @@
 package com.nnk.springboot.poseidon.controllers;
 
 import com.nnk.springboot.poseidon.domain.BidList;
+import com.nnk.springboot.poseidon.services.BidListService;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -10,13 +12,19 @@ import javax.validation.Valid;
 
 @Controller
 public class BidListController {
-    // TODO: Inject Bid service
 
+    private final BidListService bidListService;
+
+
+    @Autowired
+    public BidListController(BidListService bidListService) {
+        this.bidListService = bidListService;
+    }
 
     @RequestMapping("/bidList/list")
     public String home(Model model)
     {
-        // TODO: call service find all bids to show to the view
+        model.addAttribute("bidlists", bidListService.reads());
         return "bidList/list";
     }
 

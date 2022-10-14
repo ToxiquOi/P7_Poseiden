@@ -11,13 +11,13 @@ import java.util.Collection;
 import java.util.List;
 import java.util.stream.Collectors;
 
-public abstract class ACrudCustomSaveRestController <S extends ACrudService<?, T, ID>, T, ID, MS> implements ISaveRestController<T, MS> {
+public abstract class ACrudCustomSaveRestController <S extends ACrudService<?, T, ID>, T, ID, MT> implements ISaveRestController<T, MT> {
 
-    private ReflectMapper<MS, T> saveMapper;
+    private ReflectMapper<MT, T> saveMapper;
 
     protected S crudService;
 
-    protected ACrudCustomSaveRestController(S crudService, Class<MS> classMS, Class<T> classT) {
+    protected ACrudCustomSaveRestController(S crudService, Class<MT> classMS, Class<T> classT) {
         this.crudService = crudService;
         if(classMS != null && classT != null) {
             saveMapper = new ReflectMapper<>(classMS, classT);
@@ -37,11 +37,11 @@ public abstract class ACrudCustomSaveRestController <S extends ACrudService<?, T
         return ResponseEntity.ok().build();
     }
 
-    public ResponseEntity<T> save(MS model) {
+    public ResponseEntity<T> save(MT model) {
         return ResponseEntity.ok(crudService.save(saveMapper.mapToEntity(model)));
     }
 
-    public ResponseEntity<Collection<T>> saveAll(Collection<MS> models) {
+    public ResponseEntity<Collection<T>> saveAll(Collection<MT> models) {
         return ResponseEntity.ok(crudService.saveMany(models.stream()
                 .map(ms -> saveMapper.mapToEntity(ms))
                 .collect(Collectors.toList())
