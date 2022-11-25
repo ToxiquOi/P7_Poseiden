@@ -1,6 +1,7 @@
 package com.nnk.springboot.poseidon.controllers;
 
 import com.nnk.springboot.poseidon.domain.CurvePoint;
+import com.nnk.springboot.poseidon.domain.User;
 import com.nnk.springboot.poseidon.services.CurvePointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -34,19 +35,30 @@ public class CurveController {
 
     @PostMapping("/curvePoint/validate")
     public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
-        // TODO: check data valid and save to db, after saving return Curve list
+        if (!result.hasErrors()) {
+            curveService.save(curvePoint);
+            model.addAttribute("bidLists", curveService.reads());
+            return "redirect:/curvePoint/list";
+        }
         return "curvePoint/add";
     }
 
     @GetMapping("/curvePoint/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get CurvePoint by Id and to model then show to the form
+        CurvePoint curve = curveService.read(id);
+        model.addAttribute("curve", curve);
         return "curvePoint/update";
     }
 
     @PostMapping("/curvePoint/update/{id}")
     public String updateBid(@PathVariable("id") Integer id, @Valid CurvePoint curvePoint,
                              BindingResult result, Model model) {
+        if(result.hasErrors()) {
+            return "redirect:/curvePoint/update";
+        }
+
+        curveService.save(curvePoint);
+        model.addAttribute("curves", curveService.reads());
         // TODO: check required fields, if valid call service to update Curve and return Curve list
         return "redirect:/curvePoint/list";
     }

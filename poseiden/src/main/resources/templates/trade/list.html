@@ -41,9 +41,10 @@
 				<td th:text="${trade.tradeId}" />
 				<td th:text="${trade.account}" />
 				<td th:text="${trade.type}" />
+				<td th:text="${trade.buyQuantity}" />
 				<td>
 					<button type="button" class="btn btn-primary">Edit</button>
-					<button type="button" class="btn btn-danger" >Delete</button>
+					<button type="button" class="btn btn-danger" th:href="@{'/trade/delete/' + ${trade.tradeId}}">Delete</button>
 				</td>
 			</tr>
 			</tbody>

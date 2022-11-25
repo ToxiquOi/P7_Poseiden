@@ -4,9 +4,12 @@ import lombok.AllArgsConstructor;
 import lombok.Getter;
 import lombok.NoArgsConstructor;
 import lombok.Setter;
+import org.springframework.format.annotation.DateTimeFormat;
 
 import javax.persistence.*;
 import java.sql.Timestamp;
+import java.time.LocalDateTime;
+import java.util.Date;
 
 @Entity
 @Table(name = "bidlist")
@@ -27,16 +30,22 @@ public class BidList {
     private Double bid;
     private Double ask;
     private String benchmark;
-    private Timestamp bidListDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime bidListDate;
     private String commentary;
     private String security;
     private String status;
     private String trader;
     private String book;
     private String creationName;
-    private Timestamp creationDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime creationDate;
     private String revisionName;
-    private Timestamp revisionDate;
+
+    @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
+    private LocalDateTime revisionDate;
     private String dealName;
     private String dealType;
     private String sourceListId;

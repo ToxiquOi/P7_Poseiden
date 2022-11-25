@@ -41,12 +41,12 @@
 				<tr th:each="rating: ${ratings}">
 					<td th:text="${rating.id}" />
 					<td th:text="${rating.moodysRating}" />
-					<td th:text="${rating.sandPRating}" />
+					<td th:text="${rating.sandRating}" />
 					<td th:text="${rating.fitchRating}" />
 					<td th:text="${rating.orderNumber}" />
 					<td>
 						<button type="button" class="btn btn-primary">Edit</button>
-						<button type="button" class="btn btn-danger" >Delete</button>
+						<a type="button" class="btn btn-danger" th:href="@{'/rating/delete/' + ${rating.id}}">Delete</a>
 					</td>
 				</tr>
 			</tbody>

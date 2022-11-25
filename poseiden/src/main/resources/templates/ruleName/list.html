@@ -50,7 +50,7 @@
 				<td th:text="${rule.sqlPart}" />
 				<td>
 					<button type="button" class="btn btn-primary">Edit</button>
-					<button type="button" class="btn btn-danger" >Delete</button>
+					<a type="button" class="btn btn-danger" th:href="@{'/ruleName/delete/' + ${rule.id}}">Delete</a>
 				</td>
 			</tr>
 			</tbody>

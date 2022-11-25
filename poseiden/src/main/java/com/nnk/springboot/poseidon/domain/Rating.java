@@ -18,7 +18,7 @@ public class Rating {
     @Column(name = "id", nullable = false)
     Integer id;
     String moodysRating;
-    String sandPRating;
+    String sandRating;
     String fitchRating;
     Integer orderNumber;
 }
