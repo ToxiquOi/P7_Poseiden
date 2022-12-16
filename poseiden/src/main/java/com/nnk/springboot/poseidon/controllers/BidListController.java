@@ -1,7 +1,9 @@
 package com.nnk.springboot.poseidon.controllers;
 
 import com.nnk.springboot.poseidon.domain.BidList;
+import com.nnk.springboot.poseidon.mapper.ReflectMapper;
 import com.nnk.springboot.poseidon.services.BidListService;
+import org.aspectj.lang.annotation.Pointcut;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
@@ -16,7 +18,6 @@ import javax.validation.Valid;
 public class BidListController {
 
     private final BidListService bidListService;
-
 
     @Autowired
     public BidListController(BidListService bidListService) {
@@ -57,7 +58,8 @@ public class BidListController {
         if(result.hasErrors()) {
             return "/bidlList/update";
         }
-        bidListService.save(bidList);
+
+        bidListService.update(id, bidList);
         model.addAttribute("bidlists", bidListService.reads());
         return "redirect:/bidList/list";
     }

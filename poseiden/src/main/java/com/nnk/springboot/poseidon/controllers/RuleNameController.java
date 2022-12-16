@@ -36,7 +36,7 @@ public class RuleNameController {
     public String validate(@Valid RuleName ruleName, BindingResult result, Model model) {
         if (!result.hasErrors()) {
             ruleService.save(ruleName);
-            model.addAttribute("bidLists", ruleService.reads());
+            model.addAttribute("rules", ruleService.reads());
             return "redirect:/ruleName/list";
         }
         return "ruleName/add";
@@ -44,14 +44,19 @@ public class RuleNameController {
 
     @GetMapping("/ruleName/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get RuleName by Id and to model then show to the form
+        model.addAttribute("rule", ruleService.read(id));
         return "ruleName/update";
     }
 
     @PostMapping("/ruleName/update/{id}")
     public String updateRuleName(@PathVariable("id") Integer id, @Valid RuleName ruleName,
                              BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update RuleName and return RuleName list
+        if(result.hasErrors()) {
+            return "redirect:/rating/update";
+        }
+
+        ruleService.update(id, ruleName);
+        model.addAttribute("rules", ruleService.reads());
         return "redirect:/ruleName/list";
     }
 

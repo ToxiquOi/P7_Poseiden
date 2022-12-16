@@ -37,7 +37,7 @@ public class CurveController {
     public String validate(@Valid CurvePoint curvePoint, BindingResult result, Model model) {
         if (!result.hasErrors()) {
             curveService.save(curvePoint);
-            model.addAttribute("bidLists", curveService.reads());
+            model.addAttribute("curves", curveService.reads());
             return "redirect:/curvePoint/list";
         }
         return "curvePoint/add";
@@ -57,7 +57,7 @@ public class CurveController {
             return "redirect:/curvePoint/update";
         }
 
-        curveService.save(curvePoint);
+        curveService.update(id, curvePoint);
         model.addAttribute("curves", curveService.reads());
         // TODO: check required fields, if valid call service to update Curve and return Curve list
         return "redirect:/curvePoint/list";

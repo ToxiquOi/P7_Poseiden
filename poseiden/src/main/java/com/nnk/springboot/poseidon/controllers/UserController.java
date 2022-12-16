@@ -61,7 +61,7 @@ public class UserController {
             return "user/update";
         }
 
-        userService.save(user);
+        userService.update(id, user);
         model.addAttribute("users", userService.reads());
         return "redirect:/user/list";
     }

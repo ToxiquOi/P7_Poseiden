@@ -36,7 +36,7 @@ public class RatingController {
     public String validate(@Valid Rating rating, BindingResult result, Model model) {
         if (!result.hasErrors()) {
             ratingService.save(rating);
-            model.addAttribute("bidLists", ratingService.reads());
+            model.addAttribute("ratings", ratingService.reads());
             return "redirect:/rating/list";
         }
         return "rating/add";
@@ -44,14 +44,19 @@ public class RatingController {
 
     @GetMapping("/rating/update/{id}")
     public String showUpdateForm(@PathVariable("id") Integer id, Model model) {
-        // TODO: get Rating by Id and to model then show to the form
+        model.addAttribute("rating", ratingService.read(id));
         return "rating/update";
     }
 
     @PostMapping("/rating/update/{id}")
     public String updateRating(@PathVariable("id") Integer id, @Valid Rating rating,
                              BindingResult result, Model model) {
-        // TODO: check required fields, if valid call service to update Rating and return Rating list
+        if(result.hasErrors()) {
+            return "redirect:/rating/update";
+        }
+
+        ratingService.update(id, rating);
+        model.addAttribute("ratings", ratingService.reads());
         return "redirect:/rating/list";
     }
 

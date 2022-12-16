@@ -43,8 +43,8 @@
 				<td th:text="${trade.type}" />
 				<td th:text="${trade.buyQuantity}" />
 				<td>
-					<button type="button" class="btn btn-primary">Edit</button>
-					<button type="button" class="btn btn-danger" th:href="@{'/trade/delete/' + ${trade.tradeId}}">Delete</button>
+					<a type="button" class="btn btn-primary" th:href="@{'/trade/update/' + ${trade.tradeId}}">Edit</a>
+					<a type="button" class="btn btn-danger" th:href="@{'/trade/delete/' + ${trade.tradeId}}">Delete</a>
 				</td>
 			</tr>
 			</tbody>
