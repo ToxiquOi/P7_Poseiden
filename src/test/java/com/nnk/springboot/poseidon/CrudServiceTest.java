@@ -4,12 +4,9 @@ import com.nnk.springboot.poseidon.domain.User;
 import com.nnk.springboot.poseidon.exceptions.EntityNotFoundException;
 import com.nnk.springboot.poseidon.mocks.MockCrudService;
 import com.nnk.springboot.poseidon.repositories.UserRepository;
-import org.junit.Assert;
-import org.junit.Test;
-import org.junit.Before;
-import org.junit.runner.RunWith;
+import org.junit.jupiter.api.BeforeEach;
+import org.junit.jupiter.api.Test;
 import org.mockito.Mock;
-import org.mockito.junit.MockitoJUnitRunner;
 import org.springframework.boot.test.context.SpringBootTest;
 
 import java.util.ArrayList;
@@ -18,18 +15,19 @@ import java.util.Collection;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicReference;
 
+import static org.junit.jupiter.api.Assertions.assertEquals;
+import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
 @SpringBootTest
-@RunWith(MockitoJUnitRunner.class)
 public class CrudServiceTest {
 
     @Mock
     public UserRepository repository;
     public MockCrudService<UserRepository, User, Integer> service;
 
-    @Before
+    @BeforeEach
     public void beforeEach() {
         service = new MockCrudService<>(repository);
     }
@@ -42,7 +40,7 @@ public class CrudServiceTest {
             return u;
         });
 
-        Assert.assertEquals((Integer) 666, service.save(new User()).getId());
+        assertEquals((Integer) 666, service.save(new User()).getId());
     }
 
     @Test
@@ -56,7 +54,7 @@ public class CrudServiceTest {
 
         AtomicReference<Integer> i = new AtomicReference<>(0);
         service.saveMany(Arrays.asList(new User(), new User())).forEach(user -> {
-            Assert.assertEquals(i.get(), user.getId());
+            assertEquals(i.get(), user.getId());
             i.set(i.get() + 1);
         });
     }
@@ -64,7 +62,7 @@ public class CrudServiceTest {
     @Test
     public void testReadMethodThrowEntityNotFound() {
         when(repository.findById(any(Integer.class))).thenReturn(Optional.empty());
-        Assert.assertThrows(EntityNotFoundException.class, () -> service.read(10));
+        assertThrows(EntityNotFoundException.class, () -> service.read(10));
     }
 
     @Test
@@ -78,13 +76,13 @@ public class CrudServiceTest {
         data.setFullname("otot");
 
         User updated = service.update(10, data);
-        Assert.assertEquals("toto", updated.getUsername());
-        Assert.assertEquals("otot", updated.getFullname());
+        assertEquals("toto", updated.getUsername());
+        assertEquals("otot", updated.getFullname());
     }
 
     @Test
     public void testDeleteByIdThrowException() {
         when(repository.existsById(any(Integer.class))).thenReturn(false);
-        Assert.assertThrows(EntityNotFoundException.class, () -> service.deleteById(10));
+        assertThrows(EntityNotFoundException.class, () -> service.deleteById(10));
     }
 }
