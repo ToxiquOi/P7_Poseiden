@@ -1,4 +1,4 @@
-package com.nnk.springboot.poseidon.rest;
+package com.nnk.springboot.poseidon.controllers.rest;
 
 import com.nnk.springboot.poseidon.exceptions.EntityNotFoundException;
 import com.nnk.springboot.poseidon.mapper.ReflectMapper;

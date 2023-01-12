@@ -1,7 +1,7 @@
-package com.nnk.springboot.poseidon.rest;
+package com.nnk.springboot.poseidon.controllers.rest;
 
-import com.nnk.springboot.poseidon.domain.Trade;
-import com.nnk.springboot.poseidon.services.TradeService;
+import com.nnk.springboot.poseidon.domain.CurvePoint;
+import com.nnk.springboot.poseidon.services.CurvePointService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -11,35 +11,35 @@ import java.util.Collection;
 import java.util.List;
 
 @RestController
-@RequestMapping("api/trades/")
-public class TradeRestController extends ACrudRestController<TradeService, Trade, Integer> {
+@RequestMapping("api/curvepoints/")
+public class CurvePointRestController extends ACrudRestController<CurvePointService, CurvePoint, Integer> {
 
     @Autowired
-    public TradeRestController(TradeService crudService) {
+    public CurvePointRestController(CurvePointService crudService) {
         super(crudService);
     }
 
     @Override
     @PostMapping("save")
-    public ResponseEntity<Trade> save(@NotNull Trade model) {
+    public ResponseEntity<CurvePoint> save(@NotNull CurvePoint model) {
         return super.save(model);
     }
 
     @Override
     @PostMapping
-    public ResponseEntity<Collection<Trade>> saveAll(@NotNull Collection<Trade> models) {
+    public ResponseEntity<Collection<CurvePoint>> saveAll(@NotNull Collection<CurvePoint> models) {
         return super.saveAll(models);
     }
 
     @Override
     @GetMapping
-    public ResponseEntity<List<Trade>> getAll() {
+    public ResponseEntity<List<CurvePoint>> getAll() {
         return super.getAll();
     }
 
     @Override
     @GetMapping("{id}")
-    public ResponseEntity<Trade> getById(@PathVariable @NotNull Integer id) {
+    public ResponseEntity<CurvePoint> getById(@PathVariable @NotNull Integer id) {
         return super.getById(id);
     }
 

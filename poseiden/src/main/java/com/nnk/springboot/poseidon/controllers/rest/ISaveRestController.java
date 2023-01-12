@@ -1,4 +1,4 @@
-package com.nnk.springboot.poseidon.rest;
+package com.nnk.springboot.poseidon.controllers.rest;
 
 import org.springframework.http.ResponseEntity;
 

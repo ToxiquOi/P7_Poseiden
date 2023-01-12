@@ -1,4 +1,4 @@
-package com.nnk.springboot.poseidon.rest;
+package com.nnk.springboot.poseidon.controllers.rest;
 
 import com.nnk.springboot.poseidon.services.ACrudService;
 import org.springframework.http.ResponseEntity;
