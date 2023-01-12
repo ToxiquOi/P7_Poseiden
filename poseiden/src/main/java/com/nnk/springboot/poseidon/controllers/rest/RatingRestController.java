@@ -1,4 +1,4 @@
-package com.nnk.springboot.poseidon.rest;
+package com.nnk.springboot.poseidon.controllers.rest;
 
 import com.nnk.springboot.poseidon.domain.Rating;
 import com.nnk.springboot.poseidon.services.RatingService;
