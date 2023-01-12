@@ -47,13 +47,16 @@ public abstract class ACrudService<R extends JpaRepository<T, ID>, T, ID> {
         T entity = read(id);
 
         for (Method sm : setMethods) {
-            Method gm = getMethods.stream()
+            Optional<Method> optGm = getMethods.stream()
                     .filter(m -> m.getName().contains(sm.getName().replace("set", "")))
-                    .findFirst().get();
-            Object getVal = gm.invoke(data);
+                    .findFirst();
+            if(optGm.isPresent()) {
+                Method gm = optGm.get();
+                Object getVal = gm.invoke(data);
 
-            if (getVal != null)
-                sm.invoke(entity, getVal);
+                if (getVal != null)
+                    sm.invoke(entity, getVal);
+            }
         }
 
         return save(entity);

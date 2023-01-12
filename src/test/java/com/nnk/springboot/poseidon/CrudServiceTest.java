@@ -33,7 +33,7 @@ public class CrudServiceTest {
     }
 
     @Test
-    public void testSaveMethod() {
+    void testSaveMethod() {
         when(repository.save(any(User.class))).thenAnswer(a -> {
             User u = ((User) a.getArguments()[0]);
             u.setId(666);
@@ -44,7 +44,7 @@ public class CrudServiceTest {
     }
 
     @Test
-    public void testSaveAllMethod() {
+    void testSaveAllMethod() {
         when(repository.saveAll(any(Collection.class))).thenAnswer(a -> {
             Collection<User> cu = ((Collection<User>) a.getArguments()[0]);
             AtomicReference<Integer> i = new AtomicReference<>(0);
@@ -60,13 +60,13 @@ public class CrudServiceTest {
     }
 
     @Test
-    public void testReadMethodThrowEntityNotFound() {
+    void testReadMethodThrowEntityNotFound() {
         when(repository.findById(any(Integer.class))).thenReturn(Optional.empty());
         assertThrows(EntityNotFoundException.class, () -> service.read(10));
     }
 
     @Test
-    public void testUpdateMethod() {
+    void testUpdateMethod() {
         when(repository.findById(any(Integer.class))).thenReturn(Optional.of(new User()));
         when(repository.save(any(User.class))).thenAnswer(a -> a.getArguments()[0]);
 
@@ -81,7 +81,7 @@ public class CrudServiceTest {
     }
 
     @Test
-    public void testDeleteByIdThrowException() {
+    void testDeleteByIdThrowException() {
         when(repository.existsById(any(Integer.class))).thenReturn(false);
         assertThrows(EntityNotFoundException.class, () -> service.deleteById(10));
     }

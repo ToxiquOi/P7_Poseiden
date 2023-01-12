@@ -4,7 +4,10 @@ import lombok.SneakyThrows;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Method;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.Locale;
+import java.util.Map;
 
 /***
  * Mapper bi-directionnelle générique permettant de convertir des Modèle <MT> en entité <E> et vis versa

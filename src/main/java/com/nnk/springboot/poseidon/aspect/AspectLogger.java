@@ -6,7 +6,10 @@ import com.fasterxml.jackson.databind.SerializationFeature;
 import org.apache.logging.log4j.LogManager;
 import org.apache.logging.log4j.Logger;
 import org.aspectj.lang.JoinPoint;
-import org.aspectj.lang.annotation.*;
+import org.aspectj.lang.annotation.AfterReturning;
+import org.aspectj.lang.annotation.Aspect;
+import org.aspectj.lang.annotation.Before;
+import org.aspectj.lang.annotation.Pointcut;
 import org.aspectj.lang.reflect.CodeSignature;
 import org.aspectj.lang.reflect.MethodSignature;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -24,6 +27,8 @@ import java.util.Map;
 @Component
 public class AspectLogger {
 
+    private static final String enterLogString = "==> path(s): {}, method(s): {}, arguments: {} ";
+    private static final String returningLogString = "<== path(s): {}, method(s): {}, retuning: {}";
     private static final Logger log = LogManager.getLogger(AspectLogger.class);
     private final ObjectMapper mapper;
 
@@ -49,17 +54,17 @@ public class AspectLogger {
 
         try {
             if(mappings[0] instanceof GetMapping) {
-                log.info("==> path(s): {}, method(s): {}, arguments: {} ",
+                log.info(enterLogString,
                         signature.toShortString(), "GET", mapper.writeValueAsString(parameters));
             } else if (mappings[0] instanceof PostMapping) {
                 if(parameters instanceof HashMap<?, ?>)
-                    log.info("==> path(s): {}, method(s): {}, arguments: {} ",
+                    log.info(enterLogString,
                         signature.toShortString(), "POST", mapper.writeValueAsString(parameters.values().toArray()[1]));
                 else
-                    log.info("==> path(s): {}, method(s): {}, arguments: {} ",
+                    log.info(enterLogString,
                             signature.toShortString(), "POST", mapper.writeValueAsString(parameters));
             } else if(mappings[0] instanceof DeleteMapping) {
-                log.info("==> path(s): {}, method(s): {}, arguments: {} ",
+                log.info(enterLogString,
                         signature.toShortString(), "DELETE", mapper.writeValueAsString(parameters));
             }
         } catch (JsonProcessingException e) {
@@ -73,7 +78,7 @@ public class AspectLogger {
         Annotation[] mappings = signature.getMethod().getAnnotations();
 
         try {
-            logAfter(mappings[0], "<== path(s): {}, method(s): {}, retuning: {}", signature.toShortString(), mapper.writeValueAsString(entity));
+            logAfter(mappings[0], returningLogString, signature.toShortString(), mapper.writeValueAsString(entity));
         } catch (Exception e) {
             log.error("Error while converting", e);
         }
@@ -84,7 +89,7 @@ public class AspectLogger {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Annotation[] mappings = signature.getMethod().getAnnotations();
 
-        logAfter(mappings[0], "<== path(s): {}, method(s): {}, retuning: {}", signature.toShortString(), redirect);
+        logAfter(mappings[0], returningLogString, signature.toShortString(), redirect);
     }
 
     private void logAfter(Object type, String msg, String methodInfo, String output) {
