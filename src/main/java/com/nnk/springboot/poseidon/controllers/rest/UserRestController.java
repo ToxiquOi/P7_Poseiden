@@ -22,12 +22,6 @@ public class UserRestController extends ACrudCustomSaveRestController<UserServic
     }
 
     @Override
-    @Deprecated
-    public ResponseEntity<Collection<User>> saveAll(Collection<UserRegistrationModel> models) {
-        return ResponseEntity.status(HttpStatus.NOT_IMPLEMENTED).build();
-    }
-
-    @Override
     @PostMapping("/save")
     public ResponseEntity<User> save(@NotNull UserRegistrationModel model) {
         return super.save(model);

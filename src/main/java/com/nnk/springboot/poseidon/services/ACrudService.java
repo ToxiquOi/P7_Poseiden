@@ -12,7 +12,7 @@ public abstract class ACrudService<R extends JpaRepository<T, ID>, T, ID> {
 
     protected R repository;
 
-    public ACrudService(R repository) {
+    protected ACrudService(R repository) {
         this.repository = repository;
     }
 

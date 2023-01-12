@@ -61,7 +61,6 @@ public class CurveController {
 
         curveService.update(id, curvePoint);
         model.addAttribute("curves", curveService.reads());
-        // TODO: check required fields, if valid call service to update Curve and return Curve list
         return "redirect:/curvePoint/list";
     }
 
