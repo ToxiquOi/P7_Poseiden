@@ -44,9 +44,7 @@ public abstract class ACrudService<R extends JpaRepository<T, ID>, T, ID> {
         Set<Method> getMethods = Arrays.stream(data.getClass().getDeclaredMethods())
                 .filter(method -> method.getName().startsWith("get")).collect(Collectors.toSet());
 
-        Optional<T> optEntity = repository.findById(id);
-        if (!optEntity.isPresent()) throw new EntityNotFoundException();
-        T entity = optEntity.get();
+        T entity = read(id);
 
         for (Method sm : setMethods) {
             Method gm = getMethods.stream()
