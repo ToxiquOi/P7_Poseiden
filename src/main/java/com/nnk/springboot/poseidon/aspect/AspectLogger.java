@@ -53,20 +53,9 @@ public class AspectLogger {
         Map<String, Object> parameters = getParameters(joinPoint);
 
         try {
-            if(mappings[0] instanceof GetMapping) {
-                log.info(enterLogString,
-                        signature.toShortString(), "GET", mapper.writeValueAsString(parameters));
-            } else if (mappings[0] instanceof PostMapping) {
-                if(parameters instanceof HashMap<?, ?>)
-                    log.info(enterLogString,
-                        signature.toShortString(), "POST", mapper.writeValueAsString(parameters.values().toArray()[1]));
-                else
-                    log.info(enterLogString,
-                            signature.toShortString(), "POST", mapper.writeValueAsString(parameters));
-            } else if(mappings[0] instanceof DeleteMapping) {
-                log.info(enterLogString,
-                        signature.toShortString(), "DELETE", mapper.writeValueAsString(parameters));
-            }
+            log(mappings[0], enterLogString, signature.toShortString(), 
+                    mapper.writeValueAsString((parameters instanceof HashMap<?, ?>)? parameters.values().toArray()[1] : parameters)
+            );
         } catch (JsonProcessingException e) {
             log.error("Error while converting", e);
         }
@@ -78,7 +67,7 @@ public class AspectLogger {
         Annotation[] mappings = signature.getMethod().getAnnotations();
 
         try {
-            logAfter(mappings[0], returningLogString, signature.toShortString(), mapper.writeValueAsString(entity));
+            log(mappings[0], returningLogString, signature.toShortString(), mapper.writeValueAsString(entity));
         } catch (Exception e) {
             log.error("Error while converting", e);
         }
@@ -89,10 +78,10 @@ public class AspectLogger {
         MethodSignature signature = (MethodSignature) joinPoint.getSignature();
         Annotation[] mappings = signature.getMethod().getAnnotations();
 
-        logAfter(mappings[0], returningLogString, signature.toShortString(), redirect);
+        log(mappings[0], returningLogString, signature.toShortString(), redirect);
     }
 
-    private void logAfter(Object type, String msg, String methodInfo, String output) {
+    private void log(Object type, String msg, String methodInfo, String output) {
         if(type instanceof GetMapping) {
             log.info(msg, methodInfo, "GET", output);
         } else if (type instanceof PostMapping) {
