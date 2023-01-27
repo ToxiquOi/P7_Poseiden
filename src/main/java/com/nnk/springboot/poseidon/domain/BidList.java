@@ -29,7 +29,7 @@ public class BidList {
     private String benchmark;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime bidListDate;
+    private LocalDateTime bidListDate = LocalDateTime.now();
     private String commentary;
     private String security;
     private String status;
@@ -38,11 +38,11 @@ public class BidList {
     private String creationName;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime creationDate;
+    private LocalDateTime creationDate = LocalDateTime.now();
     private String revisionName;
 
     @DateTimeFormat(pattern = "yyyy-MM-dd'T'HH:mm")
-    private LocalDateTime revisionDate;
+    private LocalDateTime revisionDate = LocalDateTime.now();
     private String dealName;
     private String dealType;
     private String sourceListId;

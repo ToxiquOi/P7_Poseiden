@@ -18,10 +18,12 @@ import javax.validation.Valid;
 public class UserController {
 
     private final UserService userService;
+    private final BCryptPasswordEncoder bCryptEncoder;
 
     @Autowired
-    public UserController(UserService userService) {
+    public UserController(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
         this.userService = userService;
+        this.bCryptEncoder = bCryptPasswordEncoder;
     }
 
     @RequestMapping("/user/list")
@@ -39,8 +41,7 @@ public class UserController {
     @PostMapping("/user/validate")
     public String validate(@Valid User user, BindingResult result, Model model) {
         if (!result.hasErrors()) {
-            BCryptPasswordEncoder encoder = new BCryptPasswordEncoder();
-            user.setPassword(encoder.encode(user.getPassword()));
+            user.setPassword(bCryptEncoder.encode(user.getPassword()));
             userService.save(user);
             model.addAttribute("users", userService.reads());
             return "redirect:/user/list";
