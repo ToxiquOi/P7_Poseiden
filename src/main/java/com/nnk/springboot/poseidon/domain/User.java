@@ -20,15 +20,15 @@ public class User {
     private Integer id;
     @NotBlank(message = "Username is mandatory")
     private String username;
-
     @NotNull
-    @NotBlank(message = "Password is mandatory")
     @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–{}:;',?/*~$^+=<>]).{8,20}$",
             message = "Enter valid password")
     private String password;
+    @NotNull
     @NotBlank(message = "FullName is mandatory")
     private String fullname;
 
+    @NotNull
     @NotBlank(message = "Role is mandatory")
     private String role;
 }

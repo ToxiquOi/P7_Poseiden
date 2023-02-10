@@ -3,6 +3,7 @@ package com.nnk.springboot.poseidon;
 import com.nnk.springboot.poseidon.domain.User;
 import com.nnk.springboot.poseidon.exceptions.EntityNotFoundException;
 import com.nnk.springboot.poseidon.mocks.MockCrudService;
+import com.nnk.springboot.poseidon.mocks.TestSecurityConfig;
 import com.nnk.springboot.poseidon.repositories.UserRepository;
 import org.junit.jupiter.api.BeforeEach;
 import org.junit.jupiter.api.Test;
@@ -20,7 +21,7 @@ import static org.junit.jupiter.api.Assertions.assertThrows;
 import static org.mockito.ArgumentMatchers.any;
 import static org.mockito.Mockito.when;
 
-@SpringBootTest
+@SpringBootTest(classes = TestSecurityConfig.class)
 public class CrudServiceTest {
 
     @Mock
