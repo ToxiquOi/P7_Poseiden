@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
@@ -21,7 +22,7 @@ public class CurvePointRestController extends ACrudRestController<CurvePointServ
 
     @Override
     @PostMapping("save")
-    public ResponseEntity<CurvePoint> save(@NotNull CurvePoint model) {
+    public ResponseEntity<CurvePoint> save(@NotNull @Valid CurvePoint model) {
         return super.save(model);
     }
 

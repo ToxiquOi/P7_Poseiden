@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
@@ -21,7 +22,7 @@ public class RatingRestController extends ACrudRestController<RatingService, Rat
 
     @Override
     @PostMapping("save")
-    public ResponseEntity<Rating> save(@NotNull Rating model) {
+    public ResponseEntity<Rating> save(@NotNull @Valid Rating model) {
         return super.save(model);
     }
 

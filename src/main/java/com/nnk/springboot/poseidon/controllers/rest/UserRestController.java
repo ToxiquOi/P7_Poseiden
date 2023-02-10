@@ -8,6 +8,7 @@ import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
@@ -23,7 +24,7 @@ public class UserRestController extends ACrudCustomSaveRestController<UserServic
 
     @Override
     @PostMapping("/save")
-    public ResponseEntity<User> save(@NotNull UserRegistrationModel model) {
+    public ResponseEntity<User> save(@Valid @NotNull UserRegistrationModel model) {
         return super.save(model);
     }
 

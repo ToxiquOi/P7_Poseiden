@@ -6,6 +6,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import javax.validation.Valid;
 import javax.validation.constraints.NotNull;
 import java.util.Collection;
 import java.util.List;
@@ -21,7 +22,7 @@ public class TradeRestController extends ACrudRestController<TradeService, Trade
 
     @Override
     @PostMapping("save")
-    public ResponseEntity<Trade> save(@NotNull Trade model) {
+    public ResponseEntity<Trade> save(@NotNull @Valid Trade model) {
         return super.save(model);
     }
 

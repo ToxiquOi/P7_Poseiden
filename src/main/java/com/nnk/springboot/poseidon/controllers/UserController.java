@@ -1,30 +1,28 @@
 package com.nnk.springboot.poseidon.controllers;
 
 import com.nnk.springboot.poseidon.domain.User;
+import com.nnk.springboot.poseidon.mapper.ReflectMapper;
+import com.nnk.springboot.poseidon.models.UserRegistrationModel;
 import com.nnk.springboot.poseidon.services.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.validation.ObjectError;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.*;
 
 import javax.validation.Valid;
-import java.util.regex.Pattern;
 
 @Controller
 public class UserController {
 
     private final UserService userService;
+    private final ReflectMapper<UserRegistrationModel, User> registrationMapper;
 
 
     @Autowired
     public UserController(UserService userService) {
         this.userService = userService;
+        registrationMapper= new ReflectMapper<>(UserRegistrationModel.class, User.class);
     }
 
     @RequestMapping("/user/list")
@@ -35,14 +33,14 @@ public class UserController {
     }
 
     @GetMapping("/user/add")
-    public String addUser(User bid) {
+    public String addUser(@ModelAttribute("user") User user) {
         return "user/add";
     }
 
     @PostMapping("/user/validate")
-    public String validate(@Valid User user, BindingResult result, Model model) {
+    public String validate(@ModelAttribute("user") @Valid UserRegistrationModel user, BindingResult result, Model model) {
         if (!result.hasErrors()) {
-            userService.save(user);
+            userService.save(registrationMapper.mapToEntity(user));
             model.addAttribute("users", userService.reads());
             return "redirect:/user/list";
         }
@@ -58,7 +56,7 @@ public class UserController {
     }
 
     @PostMapping("/user/update/{id}")
-    public String updateUser(@PathVariable("id") Integer id, @Valid User user,
+    public String updateUser(@PathVariable("id") Integer id, @Valid @ModelAttribute("user") User user,
                              BindingResult result, Model model) {
         if (result.hasErrors()) {
             return "user/update";

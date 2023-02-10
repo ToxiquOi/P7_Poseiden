@@ -51,9 +51,11 @@ public class ReflectMapper<MT, E> {
         return instance;
     }
 
+
     @SneakyThrows
-    private static void invokeGetterInSetter(Method getter, Object setterObj, Method setter, Object getterObj) {
-        setter.invoke(setterObj, getter.invoke(getterObj));
+    private static void invokeGetterInSetter(Method getMethod, Object getObj, Method setMethod, Object setObj) {
+        setMethod.invoke(setObj,
+                getMethod.invoke(getObj));
     }
 
     private static Map<String,  Map<String, Method>> generateGetSetMethodsMap(Class<?> c) {
@@ -64,9 +66,9 @@ public class ReflectMapper<MT, E> {
         Arrays.stream(c.getDeclaredMethods())
                 .forEach(m -> {
                     if(m.getName().startsWith("get"))
-                        map.get("get").put(m.getName().toLowerCase(Locale.ROOT).split("get")[0], m);
+                        map.get("get").put(m.getName().toLowerCase(Locale.ROOT).replace("get",""), m);
                     else if(m.getName().startsWith("set"))
-                        map.get("set").put(m.getName().toLowerCase(Locale.ROOT).split("set")[0],m);
+                        map.get("set").put(m.getName().toLowerCase(Locale.ROOT).replace("set",""),m);
                 });
 
         return map;
