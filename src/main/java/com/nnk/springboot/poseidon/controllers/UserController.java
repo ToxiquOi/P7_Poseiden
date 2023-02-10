@@ -7,23 +7,24 @@ import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.validation.ObjectError;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.PostMapping;
 import org.springframework.web.bind.annotation.RequestMapping;
 
 import javax.validation.Valid;
+import java.util.regex.Pattern;
 
 @Controller
 public class UserController {
 
     private final UserService userService;
-    private final BCryptPasswordEncoder bCryptEncoder;
+
 
     @Autowired
-    public UserController(UserService userService, BCryptPasswordEncoder bCryptPasswordEncoder) {
+    public UserController(UserService userService) {
         this.userService = userService;
-        this.bCryptEncoder = bCryptPasswordEncoder;
     }
 
     @RequestMapping("/user/list")
@@ -41,7 +42,6 @@ public class UserController {
     @PostMapping("/user/validate")
     public String validate(@Valid User user, BindingResult result, Model model) {
         if (!result.hasErrors()) {
-            user.setPassword(bCryptEncoder.encode(user.getPassword()));
             userService.save(user);
             model.addAttribute("users", userService.reads());
             return "redirect:/user/list";

@@ -30,7 +30,6 @@
 			<thead>
 				<tr>
 					<th>Id</th>
-					<th>CurvePointId</th>
 					<th>Term</th>
 					<th>Value</th>
 					<th>Action</th>
@@ -39,11 +38,10 @@
 			<tbody>
 				<tr th:each="curve: ${curves}">
 					<td th:text="${curve.id}" />
-					<td th:text="${curve.curveId}" />
 					<td th:text="${curve.term}" />
 					<td th:text="${curve.value}" />
 					<td>
-						<button type="button" class="btn btn-primary" th:href="@{'/curvePoint/update/' + ${curve.id}}">Edit</button>
+						<a type="button" class="btn btn-primary" th:href="@{'/curvePoint/update/' + ${curve.id}}">Edit</a>
 						<a type="button" class="btn btn-danger" th:href="@{'/curvePoint/delete/' + ${curve.id}}">Delete</a>
 					</td>
 				</tr>

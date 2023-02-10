@@ -10,7 +10,6 @@ import org.springframework.security.config.annotation.method.configuration.Enabl
 import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityCustomizer;
-import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.crypto.bcrypt.BCryptPasswordEncoder;
 import org.springframework.security.web.SecurityFilterChain;
 
@@ -29,7 +28,7 @@ public class SecurityConfigAdapter  {
     @Bean
     public SecurityFilterChain filterChain(HttpSecurity http) throws Exception {
         http.authorizeHttpRequests()
-                .antMatchers("/", "/login", "/user/list", "/user/add", "/user/validate").permitAll()
+                .antMatchers("/", "/login", "/user/list", "/user/add", "/user/validate", "/api/*").permitAll()
                 .anyRequest().authenticated()
                 .and()
                 .oauth2Login(oauth -> oauth.defaultSuccessUrl("/bidList/list").userInfoEndpoint().userService(oAuth2UserService))

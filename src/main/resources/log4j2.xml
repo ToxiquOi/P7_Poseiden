@@ -9,6 +9,24 @@
         <Console name="ConsoleAppender" target="SYSTEM_OUT" follow="true">
             <PatternLayout pattern="${LOG_PATTERN}"/>
         </Console>
+        <RollingFile
+                name="rollingFile"
+                fileName="${LOG_DIR}/application.log"
+                filePattern="${LOG_DIR}/application.%i.log.gz"
+                ignoreExceptions="false">
+            <PatternLayout>
+                <Pattern>%d{yyyy-MM-dd HH:mm:ss} %-5p %m%n</Pattern>
+            </PatternLayout>
+            <Policies>
+                <SizeBasedTriggeringPolicy size="10MB" />
+            </Policies>
+            <DefaultRolloverStrategy max="5">
+                <Delete basePath="${LOG_DIR}" maxDepth="2">
+                    <IfFileName glob="*/app-*.log.gz" />
+                    <IfLastModified age="P30D" />
+                </Delete>
+            </DefaultRolloverStrategy>
+        </RollingFile>
     </Appenders>
     <Loggers>
         <Logger name="com.example.log4j2demo" level="debug" additivity="false">
@@ -17,6 +35,7 @@
 
         <Root level="info">
             <AppenderRef ref="ConsoleAppender" />
+            <AppenderRef ref="rollingFile"/>
         </Root>
     </Loggers>
 </Configuration>

@@ -6,6 +6,8 @@ import lombok.Setter;
 
 import javax.persistence.*;
 import javax.validation.constraints.NotBlank;
+import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Pattern;
 
 @Entity
 @Table(name = "users")
@@ -18,7 +20,11 @@ public class User {
     private Integer id;
     @NotBlank(message = "Username is mandatory")
     private String username;
+
+    @NotNull
     @NotBlank(message = "Password is mandatory")
+    @Pattern(regexp = "^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[!@#&()–{}:;',?/*~$^+=<>]).{8,20}$",
+            message = "Enter valid password")
     private String password;
     @NotBlank(message = "FullName is mandatory")
     private String fullname;
